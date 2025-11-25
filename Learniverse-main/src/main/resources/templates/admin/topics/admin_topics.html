@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/base}">
+<head>
+    <meta charset="UTF-8">
+    <title>Administrar Temas</title>
+</head>
+<body>
+<main layout:fragment="content" class="max-w-6xl mx-auto px-4 py-10 space-y-8">
+
+    <!-- Encabezado -->
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <h2 class="text-3xl font-extrabold text-gray-800">📚 Administrar Temas</h2>
+        <a th:href="@{/topics/new}"
+           class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-md shadow transition">
+            ➕ Crear nuevo Tema
+        </a>
+    </div>
+
+    <!-- Mensaje de éxito -->
+    <div th:if="${successMessage}"
+         class="bg-green-100 border border-green-300 text-green-800 px-4 py-3 rounded-md shadow">
+        <p th:text="${successMessage}"></p>
+    </div>
+
+    <!-- Grid de temas -->
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div th:each="topic : ${topics}"
+             class="bg-white rounded-xl shadow-md p-5 flex flex-col justify-between hover:shadow-lg hover:scale-[1.02] transition">
+            <div>
+                <h3 class="text-xl font-semibold text-gray-900" th:text="${topic.title}"></h3>
+                <!-- Descripción -->
+                <p th:utext="${topic.description}"
+                   class="text-gray-700 leading-relaxed text-lg whitespace-pre-line"></p>
+            </div>
+            <div class="flex gap-2 mt-4">
+                <a th:href="@{'/topics/edit/' + ${topic.id}}"
+                   class="flex-1 text-center bg-yellow-500 hover:bg-yellow-400 text-white px-3 py-2 rounded-md transition">✏ Editar</a>
+                <a th:href="@{'/topics/delete/' + ${topic.id}}"
+                   class="flex-1 text-center bg-red-500 hover:bg-red-400 text-white px-3 py-2 rounded-md transition">🗑 Eliminar</a>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>
